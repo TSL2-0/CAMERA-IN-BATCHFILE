@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Emulation</title>
+</head>
+<body>
+    <canvas id="cameraCanvas" width="400" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById("cameraCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function updatePixels() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "camera.bat", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    renderPixelData(response);
+                    setTimeout(updatePixels, 100); // Update every 100 milliseconds
+                }
+            };
+            xhr.send();
+        }
+
+        function renderPixelData(data) {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Split the data into rows
+            const rows = data.split('\n');
+
+            // Define pixel size and colors
+            const pixelSize = 20;
+            const colors = ["#0000FF", "#00FF00", "#FF0000"]; // Blue, Green, Red
+
+            // Loop through rows and draw pixels
+            for (let y = 0; y < rows.length; y++) {
+                const row = rows[y];
+                for (let x = 0; x < row.length; x++) {
+                    const colorIndex = parseInt(row.charAt(x));
+                    ctx.fillStyle = colors[colorIndex];
+                    ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+                }
+            }
+        }
+
+        updatePixels(); // Initial call
+    </script>
+</body>
+</html>
