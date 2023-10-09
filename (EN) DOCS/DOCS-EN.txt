@@ -1,0 +1,14 @@
+Copyright 2015-2023 TSL2-0.
+See license for more info.
+
+How to use this app:
+
+Open a "CAMERA.html" in a chromium window.
+
+Open the "camera.html" (This is how CAMERA.bat connects to the server)
+
+Connect a camera and click on site settings in the html in chrome. Click on permissions and click "Allow camera"
+
+Or you can wait until the packaged release is available.
+
+Check **https://github.com/TSL2-0/CAMERA-IN-BATCHFILE/releases** for more info
